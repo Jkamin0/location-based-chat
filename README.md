@@ -1,4 +1,4 @@
-# location-based-chat
+# USU CS4610 Nest Starter App
 
 ## Description
 A starter app with Postgres, NestJS, and React
