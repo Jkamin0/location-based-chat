@@ -61,7 +61,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
     message.userName = payload.userName;
     message.userId = jwtBody.userId;
     message.chatRoomId = parseInt(client.handshake.query.chatRoomId as unknown as string, 10);
-    message = await this.messagesService.create(message);
+    // message = await this.messagesService.create(message);
     this.server.to(`${message.chatRoomId}`).emit('message', message);
   }
 }
