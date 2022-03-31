@@ -18,6 +18,8 @@ export const Home = () => {
   const [latitude, setLatitude] = useState('');
   const updatesRef = useRef([]);
 
+  const [availableRooms, setAvailableRooms] = useState([]);
+
   useEffect(async () => {
     const res = await api.get('/users/me');
     const { chatRooms } = await api.get('/chat_rooms');
@@ -25,15 +27,17 @@ export const Home = () => {
     setChatRooms(chatRooms);
     setUser(res.user);
     setLoading(false);
+
+    setAvailableRooms(availableRooms);
+    checkRooms();
+    console.log(availableRooms);
   }, []);
 
   useEffect(() => {
     const watch = navigator.geolocation.watchPosition(
       (location) => {
-        // updatesRef.current.push(location);
-        // setUpdates([...updatesRef.current]);
-        setLongitude(location.coords.longitude);
-        setLatitude(location.coords.latitude);
+        updatesRef.current.push(location);
+        setUpdates([...updatesRef.current]);
       },
       (err) => {
         setErrorMessage(err.message);
@@ -51,12 +55,36 @@ export const Home = () => {
   const createRoom = async () => {
     const body = {
       name: name,
-      longitude: longitude,
-      latitude: latitude,
+      longitude: updates[updates.length - 1].coords.longitude,
+      latitude: updates[updates.length - 1].coords.latitude,
     };
     const { chatRoom } = await api.post('/chat_rooms', body);
     setChatRooms([...chatRooms, chatRoom]);
     setName('');
+  };
+
+  const distance = (lat1, lon1, lat2, lon2) => {
+    var p = 0.017453292519943295; // Math.PI / 180
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p) / 2 + (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  };
+
+  const checkRooms = () => {
+    for (let i = 0; i < chatRooms.length; i++) {
+      let room = chatRooms[i];
+      let roomLat = room.latitude;
+      let roomLong = room.longitude;
+      let currentLat = updates[updates.length - 1].coords.latitude;
+      let currentLong = updates[updates.length - 1].coords.longitude;
+      let howFar = distance(roomLat, roomLong, currentLat, currentLong);
+      console.log(howFar);
+
+      if (distance < 1000) {
+        setAvailableRooms(...availableRooms, room);
+      }
+    }
   };
 
   return (
@@ -66,7 +94,7 @@ export const Home = () => {
         {errorMessage} {errorMessage && 'You need to enable GPS for this app to work'}
       </div>
       <div>
-        Current Location: {latitude} {longitude}
+        {updates[updates.length - 1].coords.latitude} {updates[updates.length - 1].coords.longitude}
       </div>
       <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
       <Button onClick={createRoom}>Create Room</Button>
