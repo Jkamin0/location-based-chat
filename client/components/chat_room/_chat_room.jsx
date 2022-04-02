@@ -26,17 +26,18 @@ export const ChatRoom = () => {
   if (loading) return 'Loading...';
 
   return (
-    <div>
-      <div>
+    <div className="chatBody">
+      <div className="title">Chatroom: {chatRoom.name}</div>
+      <div className="messages">
         {messages.map((message) => (
-          <div key={message.id}>
-            <h3>{message.userName}</h3>
-            {message.contents}
+          <div className="chatBubble" key={message.id}>
+            <h3 className="chatName">{message.userName}</h3>
+            <div className="chatContent">{message.contents}</div>
           </div>
         ))}
       </div>
-      <div>
-        <input type="text" value={contents} onChange={(e) => setContents(e.target.value)} />
+      <div className="chatBar">
+        <input className="chatTextBar" type="text" value={contents} onChange={(e) => setContents(e.target.value)} />
         <Button onClick={() => sendMessage(contents, user)}>Send</Button>
       </div>
     </div>

@@ -53,19 +53,69 @@
 
   .createRoom {
     display: flex;
-    
-    max-width: 1200px;
+    flex-direction: column;
+    max-width: 800px;
   }
 
   .roomInput {
     border-radius: 5px;
     background-color: #99AAB5;
-    border: solid;
-    
+    border: solid;    
   }
 
-  ::placeholder {
-      color: red;
+  .chatBody {
+    background-color:#99AAB5 ;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  .chatBar {
+    display: flex;
+    flex-direction: row;
+    height: 100px;  
+  }
+
+  .messages {
+      height: 100%;
+      overflow-y:auto;      
+  }
+
+  .chatTextBar {
+      width: 100%;
+      font-size: 30;
+  }
+
+  .chatName {
+      font-size: 30;
+      padding-right: 10px;
+      padding-left: 10px;
+      white-space: nowrap;
+  }
+
+  .chatContent {
+      padding-left: 10px;
+      max-width:1000px;
+      word-wrap:break-word;
+
+  }
+
+  .chatBubble {
+    background-color: lightgray;
+    width: min-content;
+    height: min-content;
+    border-radius: 8px;
+    color: black;
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    font-size: 16px;
+  }
+
+  .title {
+      font-size: 50;
   }
 
  
