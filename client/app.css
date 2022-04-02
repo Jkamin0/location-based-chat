@@ -3,3 +3,69 @@
 @tailwind components;
 
 @tailwind utilities;
+
+/* The sidebar menu */
+.body {
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidenav {
+    height: 100vh;
+    background-color: #2C2F33;
+    padding: 16px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    background-color: #99AAB5;
+    flex-direction: column;
+    padding-left: 20px;
+    font-size: 30;
+}
+
+.header {
+    font-size: 20;
+    padding-bottom: 20;
+    color: #99AAB5;
+}
+
+.room {
+    background-color: #404EED;
+    width: 96px;
+    height: 96px;
+    border-radius: 12px;
+    color: #99AAB5;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+  }
+
+  .welcome {
+      font-size: 60;
+  }
+
+  .createRoom {
+    display: flex;
+    
+    max-width: 1200px;
+  }
+
+  .roomInput {
+    border-radius: 5px;
+    background-color: #99AAB5;
+    border: solid;
+    
+  }
+
+  ::placeholder {
+      color: red;
+  }
+
+ 

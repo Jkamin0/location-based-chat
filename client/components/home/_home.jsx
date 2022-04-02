@@ -35,7 +35,7 @@ export const Home = () => {
 
       console.log(dist);
 
-      return dist < 1000;
+      return dist < 10;
     });
     setAvailableRooms(nearByRooms);
   };
@@ -82,23 +82,31 @@ export const Home = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1>Welcome {user.firstName}</h1>
-      <div>
-        {errorMessage} {errorMessage && 'You need to enable GPS for this app to work'}
-      </div>
-      <div>
-        {updates.length > 0 && updates[updates.length - 1].coords.latitude}{' '}
-        {updates.length && updates[updates.length - 1].coords.longitude}
-      </div>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      <Button onClick={createRoom}>Create Room</Button>
-      <div>
+    <div className="body">
+      <div className="sidenav">
+        <div className="header">Chat Rooms:</div>
         {availableRooms.map((chatRoom) => (
-          <div key={chatRoom.id}>
+          <div key={chatRoom.id} className="room">
             <Link to={`/chat_rooms/${chatRoom.id}`}>{chatRoom.name}</Link>
           </div>
         ))}
+      </div>
+      <div className="content">
+        <div className="welcome">Welcome {user.firstName}</div> <br />
+        <div>
+          {errorMessage} {errorMessage && 'You need to enable GPS for this app to work'}
+        </div>
+        <div>
+          This is a location based chat website. Chatroom's that are within 10 KM of you will appear on the sidebar,
+          click one to join!
+        </div>
+        <br />
+        <div>Near by you, there are currently {availableRooms.length} chat rooms.</div> <br />
+        <div className="createRoom">
+          <div>If there are no chat rooms available, feel free to make one:</div> <br />
+          <input className="roomInput" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          <Button onClick={createRoom}>Create Room</Button>
+        </div>
       </div>
     </div>
   );
